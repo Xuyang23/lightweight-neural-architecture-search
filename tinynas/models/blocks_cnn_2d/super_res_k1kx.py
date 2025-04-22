@@ -287,15 +287,15 @@ class ResK1KX(nn.Module):
                     np.sqrt(self.bottleneck_channels * self.kernel_size**2))
             ]
 
-    def get_max_feature_num(self, resolution):
+    def get_max_feature_num(self, resolution, nbitsA_out=8):
         residual_featmap = resolution**2 * self.out_channels // (
             self.stride**2)
         if self.quant:
             residual_featmap = residual_featmap * self.nbitsA[0] / 8
         conv1_max_featmap = self.conv1.get_max_feature_num(
-            resolution) + residual_featmap
+            resolution,nbitsA_out=nbitsA_out) + residual_featmap
         conv2_max_featmap = self.conv2.get_max_feature_num(
-            resolution) + residual_featmap
+            resolution,nbitsA_out=nbitsA_out) + residual_featmap
         max_featmap_list = [
             conv1_max_featmap, conv2_max_featmap
         ]

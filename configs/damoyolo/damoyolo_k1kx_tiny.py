@@ -6,7 +6,7 @@ work_dir = './save_model/k1kx_R640_layers25_lat8e-5/'
 log_level = 'INFO'  # INFO/DEBUG/ERROR
 
 """ image config """
-image_size = 320  # 224 for Imagenet, 160 for mcu
+image_size = 160  # 224 for Imagenet, 160 for mcu
 
 """ Model config """
 model = dict(
@@ -21,18 +21,11 @@ model = dict(
     ]
 )
 
-""" Latency config """
-latency = dict(
-    type = 'OpPredictor',
-    data_type = "FP16_DAMOYOLO",
-    batch_size = 32,
-    image_size = image_size,
-    )
 
 """ Budget config """
 budgets = [
     dict(type = "layers",budget = 20),
-    dict(type = "latency", budget = 8e-5)
+    dict(type = "max_feature", budget = 2000e3),
     ]
 
 """ Score config """
